@@ -8,6 +8,8 @@ import (
 
 	pb "github.com/josenpai/go-microservice/shippy-service-consignment/proto/consignment"
 	"google.golang.org/grpc"
+	"github.com/micro/go-micro"
+
 )
 
 const (
@@ -61,7 +63,10 @@ func (s *service) CreateConsignment(ctx context.Context, req *pb.Consignment) (*
 
 	// Return matching the `Response` message we created in our
 	// protobuf definition.
-	return &pb.Response{Created: true, Consignment: consignment}, nil
+	return &pb.Response{
+		Created: true, 
+		Consignment: consignment,
+	}, nil
 }
 
 // GetConsignments -
@@ -75,11 +80,17 @@ func main() {
 	repo := &Repository{}
 
 	// Set-up our gRPC server.
+	
 	lis, err := net.Listen("tcp", port)
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	s := grpc.NewServer()
+	
+
+	// Create a new service. Optionally include some options here
+	srv := micro.NewService()
+	// This name must match the package name given in the protobuf definition
 
 	// Register our service with the gRPC server, this will tie our
 	// implementation into the auto-generated interface code for our
