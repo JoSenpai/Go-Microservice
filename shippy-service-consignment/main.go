@@ -89,7 +89,7 @@ func main() {
 	
 
 	// Create a new service. Optionally include some options here
-	srv := micro.NewService()
+	srv := micro.
 	// This name must match the package name given in the protobuf definition
 
 	// Register our service with the gRPC server, this will tie our
